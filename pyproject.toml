@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nn-inbox-api"
+version = "0.1.3"
+description = "A Python wrapper for the Notesnook Inbox API."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["python-gnupg", "requests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

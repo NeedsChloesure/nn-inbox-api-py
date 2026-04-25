@@ -23,6 +23,9 @@ inbox_on_selfhosted = Notesnook_Inbox(apikey="yourapikey",server="https://nn-api
 # A full list of attributes is available here: https://help.notesnook.com/inbox-api/getting-started#3-send-data-to-the-inbox
 
 # A realistic example of a note might be...
-inbox.create_note("Title", "<h1>Content</h1><p>I'm a paragraph!</p>", "from the nn-inbox-api python script", archived=True)
+inbox.create_note("Title", "<h1>Paragraphs are cool!</h1><p>I'm a paragraph!</p>", "from the nn-inbox-api python script", archived=True)
 ```
 
+### Sending Large Content to Notesnook.
+
+This tool allows you to send slightly more content to Notesnook (About 12 megabytes of text) than the official Inbox server would allow normally. This may result in items being discarded, rejected by the server, or you being unable to sync these items after opening them in Notesnook. You should try to stay within the recommended 10 megabyte limit, but I won't stop items that are slightly over this limit from being sent to Notesnook. Do so at your own risk.

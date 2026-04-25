@@ -100,7 +100,8 @@ class Notesnook_Inbox():
         )
         if encrypted_message.ok:
             ciphertext = str(encrypted_message)
-            if len(ciphertext) > (1000*1000*10): # 10 megabytes
+            #print(len(ciphertext))
+            if len(ciphertext) > 16_000_000: # 16 megabytes - this leaves ~12 megabytes for raw text. I think this is pushing the limits slightly, even. You really shouldn't send this much text, anyway.
                 raise ValueError("Note ciphertext is too long to publish")
             
             note_message = {
@@ -109,7 +110,7 @@ class Notesnook_Inbox():
                 "alg": "pgp-aes256"
             }
             
-            post_request = requests.request("POST", urljoin(self.server, "items"), headers={"Content-Type": "application/json", "Authorization": self.apikey}, data=json.dumps(note_message), timeout=10)
+            post_request = requests.request("POST", urljoin(self.server, "items"), headers={"Content-Type": "application/json", "Authorization": self.apikey}, data=json.dumps(note_message), timeout=15)
             post_request.raise_for_status()
         else:
             raise RuntimeError(f"Failed to encrypt message.\nStatus: {encrypted_message.status}\n{encrypted_message.stderr}")
@@ -118,8 +119,12 @@ class Notesnook_Inbox():
 
             
 
-if __name__ == "__main__":
-    jsonconfig = open("config.json", "r").read()
-    jsonconfig = json.loads(jsonconfig)
-    test = Notesnook_Inbox(apikey=jsonconfig["apikey"])
-    test.create_note("test", "<p>Hello!</p>", "Testing nn_inbox_py script")
+# if __name__ == "__main__":
+#     import random, base64
+#     jsonconfig = open("config.json", "r").read()
+#     jsonconfig = json.loads(jsonconfig)
+#     test = Notesnook_Inbox(apikey=jsonconfig["apikey"])
+#     randombytes = base64.standard_b64encode(random.randbytes(8_857_268)).decode("UTF-8")
+#     print(len(randombytes))
+#     test.create_note("Size test", f"<p>The paragraph so it doesn't crash.</p><p>{randombytes}</p>", "Testing nn_inbox_py")
+#     #test.create_note("test", "<p>Hello!</p>", "Testing nn_inbox_py script")
